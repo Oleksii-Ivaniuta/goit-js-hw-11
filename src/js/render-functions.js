@@ -23,12 +23,12 @@ class RenderSlb {
         // make new markup
         const markup = this.array.map(i => {
             return `<li class="gallery-item">
-    <a href="${i.largeImageURL}"><img src="${i.webformatURL}" alt="${i.tags}" title=""/></a>
+    <a class="image-link" href="${i.largeImageURL}"><img class="image" src="${i.webformatURL}" alt="${i.tags}" title=""/></a>
     <ul class="image-descr-list">
-<li class="decr-item">Likes<span class="descr=span">${i.likes}</span></li>
-<li class="decr-item">Views<span class="descr=span">${i.views}</span></li>
-<li class="decr-item">Comments<span class="descr=span">${i.comments}</span></li>
-<li class="decr-item">Downloads<span class="descr=span">${i.downloads}</span></li>
+<li class="descr-item">Likes<span class="descr-span">${i.likes}</span></li>
+<li class="descr-item">Views<span class="descr-span">${i.views}</span></li>
+<li class="descr-item">Comments<span class="descr-span">${i.comments}</span></li>
+<li class="descr-item">Downloads<span class="descr-span">${i.downloads}</span></li>
     </ul>
     </li>`
         }).join("");

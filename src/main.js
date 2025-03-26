@@ -7,7 +7,9 @@ import "izitoast/dist/css/iziToast.min.css";
 const gallery = document.querySelector(".gallery");
 const form = document.querySelector(".form");
 const input = form.elements[0];
+input.classList.add("input")
 const btn = form.elements[1];
+btn.classList.add("button");
 const loader = document.querySelector(".loader");
 loader.style.display = "none";
 
@@ -36,7 +38,7 @@ function makeGallery(event) {
     input.value = "";
     // check for empty query
     if (fetchPhoto.q === "") {
-        iziToast.warning({
+        iziToast.error({
             message: 'Write your something you want to see',
             position: 'topRight',
         });
@@ -49,10 +51,11 @@ function makeGallery(event) {
         // check for pictures avalible
         if (data.data.hits.length === 0) {
             loader.style.display = "none";
-            iziToast.warning({
+            iziToast.error({
             message: 'Sorry, there are no images matching your search query. Please try again!',
             position: 'topRight',
             });
+            gallery.innerHTML = "";
             input.value = "";
             fetchPhoto.q = "";
             return;
