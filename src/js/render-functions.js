@@ -37,7 +37,10 @@ class RenderSlb {
         this.#renderDiv.insertAdjacentHTML("beforeend", markup);
 
         // create gallery with simplelightbox
-        let simplelightbox = new SimpleLightbox(".gallery-item a");
+        let simplelightbox = new SimpleLightbox(".gallery-item a", {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
         simplelightbox.refresh();
     }
 };

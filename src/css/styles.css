@@ -146,3 +146,19 @@ input:focus {
 .button:hover {
   background: #6c8cff;
 }
+
+.sl-image img {
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  object-fit: contain;
+}
+
+.sl-caption {
+  font-size: 18px;
+  color: white;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8px 16px;
+  border-radius: 0 0 8px 8px;
+}
