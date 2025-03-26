@@ -20,21 +20,22 @@ fetchPhoto.q = "";
 fetchPhoto.imageType = "photo";
 fetchPhoto.orientation = "horizontal";
 fetchPhoto.safesearch = true;
-fetchPhoto.url = "https://pixabay.com/api/"
+fetchPhoto.url = "https://pixabay.com/api/";
 
 // create new instance for rendering pictures on our page
 const renderPhoto = new RenderSlb([]);
 
 // making gallery using input value
 btn.addEventListener("click", makeGallery);
+
 function makeGallery(event) {
     event.preventDefault();
-    // setting directory for rendering
     renderPhoto.renderDiv = gallery;
     loader.style.display = "flex";
     fetchPhoto.q = input.value;
-    // check for empty input
-    if (input.value === "") {
+    input.value = "";
+    // check for empty query
+    if (fetchPhoto.q === "") {
         iziToast.warning({
             message: 'Write your something you want to see',
             position: 'topRight',
@@ -51,17 +52,26 @@ function makeGallery(event) {
             iziToast.warning({
             message: 'Sorry, there are no images matching your search query. Please try again!',
             position: 'topRight',
-            }); return;
+            });
+            input.value = "";
+            fetchPhoto.q = "";
+            return;
         }
         renderPhoto.array = data.data.hits;
         renderPhoto.createMarkup(renderPhoto.array);
-        loader.style.display = "none";
+            loader.style.display = "none";
+            input.value = "";
+            fetchPhoto.q = "";
+            return;
         })
         .catch(error => {
         iziToast.error({
-            message: error,
+            message: "Bad request",
+            position: "topRight",
             }); 
-        loader.style.display = "none";
+            loader.style.display = "none";
+            input.value = "";
+            fetchPhoto.q = "";
         return;
     });
     
