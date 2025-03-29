@@ -1,83 +1,50 @@
-import FetchData from './js/pixabay-api';
-import RenderSlb from './js/render-functions';
-import iziToast from "izitoast";
-import "izitoast/dist/css/iziToast.min.css";
+import fetchData from './js/pixabay-api';
+import renderPhoto, { clearGallery, showLoader, hideLoader } from './js/render-functions';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
-//find elements set all relations to elements
-const gallery = document.querySelector(".gallery");
-const form = document.querySelector(".form");
+// //find elements set all relations to elements
+const gallery = document.querySelector('.gallery');
+const form = document.querySelector('.form');
 const input = form.elements[0];
-input.classList.add("input")
+input.classList.add('input');
 const btn = form.elements[1];
-btn.classList.add("button");
-const loader = document.querySelector(".loader");
-loader.style.display = "none";
+btn.classList.add('button');
 
-// new instance of the class FetchData from paxabay api
-const fetchPhoto = new FetchData({});
-
-// set standart params for pixabay-api described in homework
-fetchPhoto.key = "49512194-f753c2f34a7e7dbbd609db53f";
-fetchPhoto.q = "";
-fetchPhoto.imageType = "photo";
-fetchPhoto.orientation = "horizontal";
-fetchPhoto.safesearch = true;
-fetchPhoto.url = "https://pixabay.com/api/";
-
-// create new instance for rendering pictures on our page
-const renderPhoto = new RenderSlb([]);
-
-// making gallery using input value
 btn.addEventListener("click", makeGallery);
 
 function makeGallery(event) {
     event.preventDefault();
-    renderPhoto.renderDiv = gallery;
-    loader.style.display = "flex";
-    fetchPhoto.q = input.value;
-    input.value = "";
-    // check for empty query
-    if (fetchPhoto.q === "") {
+    clearGallery(gallery);
+    showLoader();
+    if (input.value === "") {
+        hideLoader();
         iziToast.error({
             message: 'Write your something you want to see',
             position: 'topRight',
         });
-        loader.style.display = "none";
         return;
-    };
-    // make request from server
-    fetchPhoto.getData()
+    }
+    fetchData(input.value)
         .then(data => {
-        // check for pictures avalible
-        if (data.data.hits.length === 0) {
-            loader.style.display = "none";
+            if (data.data.hits.length === 0) {
             iziToast.error({
             message: 'Sorry, there are no images matching your search query. Please try again!',
             position: 'topRight',
             });
-            gallery.innerHTML = "";
-            input.value = "";
-            fetchPhoto.q = "";
             return;
-        }
-        renderPhoto.array = data.data.hits;
-        renderPhoto.createMarkup(renderPhoto.array);
-            loader.style.display = "none";
-            input.value = "";
-            fetchPhoto.q = "";
+            }
+            renderPhoto(gallery, data.data.hits);
+        })
+        .catch(() => {
+            iziToast.error({
+                message: 'Bad request',
+                position: 'topRight',
+            });
             return;
         })
-        .catch(error => {
-        iziToast.error({
-            message: "Bad request",
-            position: "topRight",
-            }); 
-            loader.style.display = "none";
+        .finally(() => {
+            hideLoader();
             input.value = "";
-            fetchPhoto.q = "";
-        return;
-    });
-    
+        })
 }
-
-

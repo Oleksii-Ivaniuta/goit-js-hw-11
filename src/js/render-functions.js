@@ -1,27 +1,8 @@
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-// before creating markup, set the target directory using setter renderDiv().
-class RenderSlb {
-    #renderDiv
-    constructor(params) {
-        this.array = params;
-        this.#renderDiv = null;
-    }
-
-    // setter for choose element to make new gallery
-    set renderDiv(newDiv) {
-        this.#renderDiv = newDiv;
-    }
-
-    // function for make markup and gallery
-    createMarkup() {
-
-        // clean list
-        this.#renderDiv.innerHTML = "";
-
-        // make new markup
-        const markup = this.array.map(i => {
+function renderPhoto(div, array) {
+        const markup = array.map((i) => {
             return `<li class="gallery-item">
     <a class="image-link" href="${i.largeImageURL}"><img class="image" src="${i.webformatURL}" alt="${i.tags}" title=""/></a>
     <ul class="image-descr-list">
@@ -32,19 +13,27 @@ class RenderSlb {
     </ul>
     </li>`
         }).join("");
-
-        // add new markup to list
-        this.#renderDiv.insertAdjacentHTML("beforeend", markup);
-
-        // create gallery with simplelightbox
+        div.insertAdjacentHTML("beforeend", markup);
         let simplelightbox = new SimpleLightbox(".gallery-item a", {
   captionsData: 'alt',
   captionDelay: 250,
 });
         simplelightbox.refresh();
-    }
+}
+
+function clearGallery(div) {
+    div.innerHTML = "";
+}
+
+function showLoader() {
+const loader = document.querySelector('.loader');
+loader.style.display = 'flex';
 };
 
-export default RenderSlb;
+function hideLoader() {
+const loader = document.querySelector('.loader');
+loader.style.display = 'none';
+};
 
-
+export default renderPhoto;
+export { clearGallery, showLoader, hideLoader };
