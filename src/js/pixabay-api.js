@@ -4,7 +4,7 @@ function fetchData(query) {
   const params = {
     key: '49512194-f753c2f34a7e7dbbd609db53f',
     q: query,
-    imageType: 'photo',
+    image_type: 'photo',
     orientation: 'horizontal',
     safesearch: true,
     url: 'https://pixabay.com/api/',

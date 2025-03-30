@@ -1,9 +1,10 @@
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 function renderPhoto(div, array) {
-        const markup = array.map((i) => {
-            return `<li class="gallery-item">
+  const markup = array
+    .map(i => {
+      return `<li class="gallery-item">
     <a class="image-link" href="${i.largeImageURL}"><img class="image" src="${i.webformatURL}" alt="${i.tags}" title=""/></a>
     <ul class="image-descr-list">
 <li class="descr-item">Likes<span class="descr-span">${i.likes}</span></li>
@@ -11,29 +12,34 @@ function renderPhoto(div, array) {
 <li class="descr-item">Comments<span class="descr-span">${i.comments}</span></li>
 <li class="descr-item">Downloads<span class="descr-span">${i.downloads}</span></li>
     </ul>
-    </li>`
-        }).join("");
-        div.insertAdjacentHTML("beforeend", markup);
-        let simplelightbox = new SimpleLightbox(".gallery-item a", {
+    </li>`;
+    })
+    .join('');
+  div.insertAdjacentHTML('beforeend', markup);
+}
+
+const simplelightbox = new SimpleLightbox('.gallery-item a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
-        simplelightbox.refresh();
+
+function refreshSlb() {
+  simplelightbox.refresh();
 }
 
 function clearGallery(div) {
-    div.innerHTML = "";
+  div.innerHTML = '';
 }
 
 function showLoader() {
-const loader = document.querySelector('.loader');
-loader.style.display = 'flex';
-};
+  const loader = document.querySelector('.loader');
+  loader.style.display = 'flex';
+}
 
 function hideLoader() {
-const loader = document.querySelector('.loader');
-loader.style.display = 'none';
-};
+  const loader = document.querySelector('.loader');
+  loader.style.display = 'none';
+}
 
 export default renderPhoto;
-export { clearGallery, showLoader, hideLoader };
+export { clearGallery, showLoader, hideLoader, simplelightbox, refreshSlb};

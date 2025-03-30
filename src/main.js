@@ -1,5 +1,5 @@
 import fetchData from './js/pixabay-api';
-import renderPhoto, { clearGallery, showLoader, hideLoader } from './js/render-functions';
+import renderPhoto, { clearGallery, showLoader, hideLoader, simplelightbox, refreshSlb} from './js/render-functions';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
@@ -11,8 +11,9 @@ input.classList.add('input');
 const btn = form.elements[1];
 btn.classList.add('button');
 
-btn.addEventListener("click", makeGallery);
+simplelightbox;
 
+btn.addEventListener("click", makeGallery);
 function makeGallery(event) {
     event.preventDefault();
     clearGallery(gallery);
@@ -27,6 +28,7 @@ function makeGallery(event) {
     }
     fetchData(input.value)
         .then(data => {
+            // перевірка успішного запиту на порожній масив зображень
             if (data.data.hits.length === 0) {
             iziToast.error({
             message: 'Sorry, there are no images matching your search query. Please try again!',
@@ -35,6 +37,7 @@ function makeGallery(event) {
             return;
             }
             renderPhoto(gallery, data.data.hits);
+            refreshSlb();
         })
         .catch(() => {
             iziToast.error({
@@ -48,3 +51,4 @@ function makeGallery(event) {
             input.value = "";
         })
 }
+
