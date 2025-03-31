@@ -13,7 +13,7 @@ btn.classList.add('button');
 
 simplelightbox;
 
-btn.addEventListener("click", makeGallery);
+form.addEventListener("submit", makeGallery);
 function makeGallery(event) {
     event.preventDefault();
     clearGallery(gallery);
@@ -37,7 +37,6 @@ function makeGallery(event) {
             return;
             }
             renderPhoto(gallery, data.data.hits);
-            refreshSlb();
         })
         .catch(() => {
             iziToast.error({

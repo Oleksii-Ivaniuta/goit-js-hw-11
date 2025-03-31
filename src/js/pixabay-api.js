@@ -7,9 +7,8 @@ function fetchData(query) {
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: true,
-    url: 'https://pixabay.com/api/',
   };
-  return axios.get(params.url, { params });
+  return axios.get('https://pixabay.com/api/', { params });
 }
 
 export default fetchData;

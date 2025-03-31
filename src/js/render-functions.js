@@ -16,6 +16,7 @@ function renderPhoto(div, array) {
     })
     .join('');
   div.insertAdjacentHTML('beforeend', markup);
+  refreshSlb();
 }
 
 const simplelightbox = new SimpleLightbox('.gallery-item a', {
